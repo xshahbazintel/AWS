@@ -1,0 +1,37 @@
+1. Create VPC
+select an ip range for VPC eg: 10.16.0.0/16
+give a name this is not mandatory, vpc is identified by its ID
+select tenancy as default, if you choose dedicated this will allocate an hardware for you
+this will increase the cost
+choose aws to allocate ipv6 address, this is not mandatory, prefer to do this
+once vpc is created, edit and enable dns hostnames and dns resolution
+
+2. create subnets
+here we are creating 12 subnets 4 are kept in reserved state
+vpc range is 10.16.0.0/16
+
+NAME CIDR AZ CustomIPv6Value
+sn-reserved-A 10.16.0.0/20 AZA IPv6 00(this is the ipv6 address adjustment, this can only be done if you enable ipv6 adressing at vpc level)
+sn-db-A 10.16.16.0/20 AZA IPv6 01
+sn-app-A 10.16.32.0/20 AZA IPv6 02
+sn-web-A 10.16.48.0/20 AZA IPv6 03
+
+sn-reserved-B 10.16.64.0/20 AZB IPv6 04
+sn-db-B 10.16.80.0/20 AZB IPv6 05
+sn-app-B 10.16.96.0/20 AZB IPv6 06
+sn-web-B 10.16.112.0/20 AZB IPv6 07
+
+sn-reserved-C 10.16.128.0/20 AZC IPv6 08
+sn-db-C 10.16.144.0/20 AZC IPv6 09
+sn-app-C 10.16.160.0/20 AZC IPv6 0A
+sn-web-C 10.16.176.0/20 AZC IPv6 0B
+
+Remember to enable auto assign ipv6 on every subnet you create.
+
+3. create IGW 
+create an IGW and attach this to VPC
+
+4. create route table
+create a route table, under routes give 0.0.0.0/0 and ::/0(IPv6) keep target to IGW created in step3
+attach the subnets to this route table, this will make subnets public
+this will make instances/ec2 machines to connect to external world, meaning they can download any patches

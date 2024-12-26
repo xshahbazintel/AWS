@@ -1,0 +1,18 @@
+container definition: container image location(registry), ports that needs to be exposed
+Task definition:
+can contain one container definition or multiple container definitions
+stores details of cpu, memory, and where to run(EC2 or fargate), roles that this task needs task needs called as task roles
+service definition: manages replicas of tasks for HA
+
+Cluster modes:
+EC2: 
+runs with in a vpc 
+asg manages no of containers to run 
+you need to manage capacity and availability
+large consistent workload, price consicuos
+
+Fargate mode:
+serverless
+tasks run on shared cluster and injected into your vpc 
+small burst workloads, batch periodic workloads
+large workload, dont want admin overhead

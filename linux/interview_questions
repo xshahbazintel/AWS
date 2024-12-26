@@ -1,0 +1,119 @@
+linux boot process:
+
+BIOS(Basic Input output initializes the hardware) which is stored in ROM  and it runs POST(Power On Self Test) 
+which tests hardware,screen other devices connected this is performed for all os
+the BIOS is loacted in ROM of motherboard 
+once post is passed now bios will start booting process and search for Master Boot Record (MBR)
+MBR is 512 bytes located on first set of hard disk of bootable device
+
+lilo is a boot loader for linux based systems 
+grub is also a boot loader this can be used for windows or linux based systems
+grub runs from RAM
+
+grub will load kernel into memory RAM and starts kernel initilaisation
+this will start a process systemd
+
+mount a file system:
+mount <external device mounted path>  <mount path created for device>
+mount /dev/sdf /ebstest  (/ebstest should be already present and what ever files are present in device /dev/sdf gets mounted to /ebstest also files created under /ebstest will be actually created on disc mounted on /dev/sdf)
+
+
+add a volume to linux system:
+1. check volumes attahed using lsblk
+2. get volumeid using blkid
+3. create a directory where you want to mount this volume 
+4. vi /etc/fstab UUID=<volume id in step2> <directory created in step3> <filesystem type> defaults,nofail
+5. run mount -a or reboot system
+6. check mounts using df -h
+
+
+Partition
+parted /dev/sda 
+mklabel gpt 
+mkpart primary ext4 0% 100% 
+print 
+quit 
+FORMAT 
+mkfs.ext4 /dev/sda1 
+ls -la /dev/disk/by-uuid  ##look for the UUID of /dev/sda1 
+#Edit /etc/fstab 
+##workspace store with UUID e89a8520-8f5f-4da4-81ca-7e7e92629861
+/dev/disk/by-uuid/8c093913-2d6f-49f0-8140-059962ef9229 /srv ext4 defaults 0 0 
+##save /etc/fstab
+mount -a 
+
+
+CREATING LOGICAL VOLUME  
+
+ 
+ 
+
+Create partitions on each SSD using tools like fdisk or parted. 
+
+ 
+
+Create physical volumes: 
+
+ 
+
+Use the pvcreate command to initialize each partition as a physical volume. 
+
+Exampl/dev/sdb1, pvcreate /dev/sdc1 
+
+ 
+
+Create a volume group: 
+
+ 
+
+Use the vgcreate command to create a volume group that includes both physical volumes. 
+
+Example: vgcreate myvg /dev/sdb1 /dev/sdc1, where "myvg" is the name of the volume group. 
+
+ 
+
+Create a logical volume: 
+
+ 
+
+Use the lvcreate command to create a logical volume within the volume group. 
+
+Specify the desired size for the logical volume. In this case, you can use the full capacity of the SSDs (931.51GB). 
+
+Example: lvcreate -n mylv -L 1863G myvg, where "mylv" is the name of the logical volume and "1863G" is the sum of the capacities of both SSDs. 
+
+ 
+
+Format the logical volume: 
+
+ 
+
+Use a file system tool like mkfs to format the logical volume with a file system. 
+
+Example: mkfs.ext4 /dev/myvg/mylv 
+
+ 
+
+Mount the logical volume: 
+
+ 
+
+Create a mount point directory using mkdir. 
+
+Mount the logical volume using the mount command. 
+
+Example: mount /dev/myvg/mylv /mnt/mymountpoint 
+
+ 
+
+Configure automatic mounting: 
+
+ 
+
+Add an entry to the /etc/fstab file to mount the logical volume at boot time. 
+
+ /dev/myvg/mylv /mnt/mymountpoint ext4 defaults 0 0 
+
+ 
+
+/dev/vg/volume1 /srv ext4 defaults 0 0 

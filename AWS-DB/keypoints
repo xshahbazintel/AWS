@@ -1,0 +1,66 @@
+CAP: 
+consistency: every node in a cluster gives you same, most recent and successful write
+availability: Availability means that each read or write request for a data item will either be processed successfully or will receive a message that the operation cannot be completed.
+partition tolerance: Partition tolerance means that the system can continue operating even if the network connecting the nodes has a fault that results in two or more partitions, where the nodes in each partition can only communicate among each other.
+
+ACID AND BASE are are transaction models
+ACID: atomic, consistent,, independent, durable
+generally refers to relational database systems
+limits to scaling
+
+BASE: basic available, soft state, eventually consistent
+offers high scalability
+
+when should you run DB on EC2:
+when you need os level access of DB
+when you want a specific version of DB that aws wont provide
+when your application needs os/db composition
+advance db tuning
+vendor requirements
+architechture aws wont provide
+
+
+RDS:
+Multi AZ Instance mode:
+there are two instances primary and standby
+primary will always serve read and write  operations, no way standby will serve you read or writes
+standby will by syncing synchronus with primary db to keep data in sync
+aws will take snapshots from standby and replicate in multiple azs
+Multi AZ cluster mode:
+in cluster mode there will be 1 Write mode and 2 Read mode instances
+write mode instance perform write operations and read operations too
+read mode instances will strictly perform read operations
+write is confirmed by write instance only when atleast read instance confirms it
+failover is fast compared to instance mode
+writes are faster, first db writes to instance store and flushes it to EBS
+replication is via transaction logs
+
+
+snapshots and Automated Backups:
+you cant see snapshots or backups in s3 bucket even it gets stored there, aws managed those, you can see in rds instance but you cant access it
+snapshots:
+you have to take snapshot, aws wont handle it 
+you have to delete and manage those, even if you delete RDS, snapshots wont be deleted
+you have to take snapshots more frequently for less data loss
+Automated Backups:
+aws will handle this
+window period is 0 to 35 days, the days for which backup can present
+after 35 days backup will be deleted
+when you delete the rds backups also be deleted also you can mention days for which current backups can be retained
+but this will also be deleted after retention days period
+this will save transaction logs for every 5 minutes
+you can save snapshots and transaction details in a different region
+
+when you restore db from snapshot or backup this will create a new instance, new cname
+restored are slow
+
+in synchronus the data will be pushed to all replicas  but in asynchronus the data will be be pushed into its replicas and then to read replicas
+
+synchronus means multiAZ
+asynchronus means Readreplicas
+
+Readreplicas:
+this can be in same or different AZ 
+can be used only for read purpose
+asynchronus process, there will be lag in data compared to primary instance
+low Recovery Time Objectives, can be promoted quickly to primary instance

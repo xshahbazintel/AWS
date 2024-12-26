@@ -1,0 +1,87 @@
+Storage:
+Instance/local storage: just like c disk on but on server machine, not permanent, loss of data when you shutdown and restart, not ideal for persistant or permanent data eg: instance store
+Network attached storage: permanent storage eg: ebs
+Ephermal storage: not permanent eg: instance store
+Persistent storage: permanent storage eg: ebs
+
+
+BlockStorage:
+stores data by dividing into blocks and stores in different locations with unique identifier 
+Block storage allows direct access to individual data blocks.
+this can be mountable on os also you can boot os making it blockable
+ideal for large storage systems and random data access like db applications
+it has limited capability to handle metadata
+
+Filestorage:
+data is stored in a structured format, like folders
+for accessing the data you have to access the path of file 
+File storage uses file names, the type of data in the file (extension), and a specific path to the data’s location as unique identifiers. 
+inexpensive, simple and easy
+Mountable but not bootable
+eg: nfs
+
+Blob storage:
+Object storage is a data storage architecture where data is stored in isolated containers called objects. Object-based storage divides data into separate units that contain a unique identifier and metadata to describe the data and make it easier to access and retrieve than other types of storage.
+flat structure
+not mountable not bootable
+eg: s3
+
+Storage Performance:
+IO(blocks): the size of the block you want to store/retrive from storage system
+IOPS: No of operations you perform on the storage system
+Throughput: IO*IOPS
+
+Types:
+Genreral purpose (GP2):
+min 1Gb max 16TB
+Io credit bucket meaning how many IO operations you can perform on EBS volume 
+5.4 million, credits fills at baseline Performance
+what is baseline Performance?
+the min credits you will get on bucket this is 100 per second
+on top of this you will get an extra of 5 for GB per second
+
+if the size of volume is 1TB or more you will get baseline Performance of 16000IOPS
+Good for  dev test envs and boot volumes, low latency interactive applications
+
+Genreral purpose (GP3):
+min 1Gb max 16TB
+doesnt have bucket architecture
+baseline of 3000iops and 125 MB per second
+can go to 16000IOPS and 1000MB/s with extra cost
+
+Provisioned IOPS:
+ Provisioned IOPS1 and Provisioned IOPS2 can achecive ans IOPS upto 64000 and 1000MB/s Throughput
+ theser are independent of volume size 
+ ideal for high Performance and low latency
+ min 4B and max 16TB
+ io1 max is 50iops per GB io2 is 500iops per GB and block express 1000 iops per GB
+ Provisioned IOPS block express can achecive IOPS of 2,56,000 and 4000MB/s Throughput
+ min 4GB max 64TB
+HDD:
+slow when compared to GP and Provisioned IOPS 
+HDD ST1: 
+Throughput optimised
+min 125GB max 16TB
+ideal for sequential data retrival 
+max 500IOPS 500 mb/s
+usages: bigdata warehouses, log processing
+
+HDD Cold:
+min 125GB max 16TB
+cheaper among all
+used for less frequent access data
+max 250IOPS 200mb/s
+
+instance store:
+Local storage attached to host server of ec2 machine
+temporary storage
+you can attach this only at launch time, cant attach it later
+one server can attach more than one instance store volumes
+when ami is changed or server is stopped and started or hardware failures or ec2 is moved between machines data will be lost
+
+EBS Encryption:
+you can encrypty one volume with one DEK
+cant use same DEK for multiple volumes
+snapshots use same DEK
+login into system can see original data means ths system using this ebs is not aware of Encryption
+data is encrypted only on volume device

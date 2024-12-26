@@ -1,0 +1,10 @@
+1. create a domain name in Godaddy eg: devopsdoctor.online
+2. create hosted zone in route53
+   give domain name same as devopsdoctor.online
+   this will create 4 nameservers take this name servers and add this nameservers in Godaddy by removing nameservers given
+   by Godaddy
+3. now under created hosted zone in step2 create a A name record  that points to your ec2 servers public ip 
+   Record name can be www.devopsdoctor.online or test.devopsdoctor.online but you should use 
+   devopsdoctor.online domain name, select A name record under value give ec2s public ip and select simple routing as routing stategy and save
+   now your registered domiain points to ec2 public ip
+   

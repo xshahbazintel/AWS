@@ -1,0 +1,34 @@
+1. disable swap 
+2. install containerd
+3. containerd config default this will generate a config file save this at /etc/containerd/config.toml
+   in this config.toml change SystemdCgroup = true
+4. sudo systemctl restart containerd
+
+sudo apt-get update
+# apt-transport-https may be a dummy package; if so, you can skip that package
+sudo apt-get install -y apt-transport-https ca-certificates curl gpg
+
+
+# If the directory `/etc/apt/keyrings` does not exist, it should be created before the curl command, read the note below.
+# sudo mkdir -p -m 755 /etc/apt/keyrings
+curl -fsSL https://pkgs.k8s.io/core:/stable:/v1.32/deb/Release.key | sudo gpg --dearmor -o /etc/apt/keyrings/kubernetes-apt-keyring.gpg
+
+echo 'deb [signed-by=/etc/apt/keyrings/kubernetes-apt-keyring.gpg] https://pkgs.k8s.io/core:/stable:/v1.32/deb/ /' | sudo tee /etc/apt/sources.list.d/kubernetes.list
+
+
+sudo apt-get update
+sudo apt-get install -y kubelet kubeadm kubectl
+sudo apt-mark hold kubelet kubeadm kubectl
+
+
+Both the container runtime and the kubelet have a property called "cgroup driver", which is important for the management of cgroups on Linux machines.
+
+sudo kubeadm init --apiserver-advertise-address <ip address> --pod-network-cidr <pod network-cidr> --upload-certs
+
+
+run all the process on all worker and master nodes except kubeadm init
+kubeadm init is to be run only on master nodes
+
+kubeadm join command should be run only on worker nodes
+
+

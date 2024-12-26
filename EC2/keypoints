@@ -1,0 +1,142 @@
+A non-privileged mode that's used by normal user programs. User mode has limited access to the computer's hardware and resources, and can't execute commands that could destabilize the system. Applications like web browsers, word processors, and video players run in user mode.
+Privileged mode
+Also known as kernel mode, this mode is reserved for operating system code and exception handling. Privileged mode has a higher level of privileges than user mode, and can execute privileged instructions that can only be run in kernel mode. 
+
+EC2 is an AZ resilient service
+shared hosts, they will share the resources of the hardware with other aws customers 
+the other customers cant see each others data 
+Dedicated hosts, the entire server is dedicated to single customer resources are not shared
+
+An instance store volume exists only during the lifetime of the instance to which it is attached. You can’t configure an instance store volume to persist beyond the lifetime of its associated instance.
+
+The data on an instance store volume persists even if the instance is rebooted. However, the data does not persist if the instance is stopped, hibernated, or terminated. When the instance is stopped, hibernated, or terminated, every block of the instance store volume is cryptographically erased.
+
+Therefore, do not rely on instance store volumes for valuable, long-term data
+
+Network Interface:
+when you launch an ec2 an network interface is created and attached to the hardware running in a subnet in an AZ
+this network interface can be attached to another subnet but itshould be in same AZ
+
+EC2 is ideal for:
+traditional os + compute based applications
+long run compure 
+server style applications application should run only on windows or linux
+migrated workloads to cloud for disaster recovery
+burst or steady state loads
+monolithic applications 
+
+Instance types:
+general purpose
+compute optimised
+memory optimised 
+Storage Optimized
+Accelerated Computing
+HPC Optimized
+
+Network Interfaces:
+Every instance has one ENI by default
+you can attach one or more eni based on instance type
+secondary eni can be present in same or different subnet in same AZ
+
+primary ENI :
+mac address
+1 primary private IP, 0 or more secondary private ip address
+0 or 1 public ipv4 address 
+1 elastic ip for 1 private ip address 
+0 or more ipv6 address 
+security groups
+source/destination check
+
+secondary ENI:
+this can be one or more for instance based on instance type
+it has all capabilites as primary eni, you can attach or detach from instance anytime
+
+if an instance has a public ip you attach a elastic ip to that instance then instance loose its previous public ip address, if you remove elastic ip later then instance wont receive same public before it has, it will get new one
+
+inside in vpc public dns always resolve to private IP outside vpc uses public IP 
+
+AMI:
+belongs to single region
+you can copy other regions
+current AMI cant be edited, you can change config and create a new one 
+permisions are default, belongs to your account
+when an ebs is attaced to instance and you create an image out of it this will create a snapshot of EBS volume and refers that volume id into instance, when you launch this image in another region ebs volume snapshot will also will be created
+
+purchase options/launch types:
+on demand: default, per second billing, short term workloads, unknown worloads, apps which cant be un interrupted, no host exposure, host is shared with other customers
+spot instances: not suitable for workloads cant tolerate interruptions, can be used for stateless like can tolerate user interruptions.
+Reserved instances: long term usage, reservation can be made in az or in region
+dedicated hosts: you pay for the host not for the instance and you can launch as many instances as you want till capacity requirements meet, usually used for software licensing based on cores/sockets, capacity management is required
+dedicated hosts: the hardware your instance is running is not shared with other but instance cost is higher but dedicated hardware.
+scheduled reserved instances: reserve for a particular day for some time, every day for 5 hrs this can be used, you have to use for this a min of 1200 hrs and 1 year 
+capacity reservations:
+
+status checks: while launching ec2 has to pass status check 
+1. system check, checks that are performed on host machine
+2. instance check, check that are performed on instance
+
+you can create an ec2 alaram and recover, reboot, stop, or terminate the instance
+
+you can protect an instance from accidental termination using disable accidental termination button
+this will protect instance from accidental termination, role seperation is possible for this 
+who can activae the button and who can terminate the instance 
+
+Horizontal scaling:
+increase cpu or memory of an existing instance by selecting a large instance
+needs disruption a reboot
+large size of instance means more cost
+no application change needed 
+limitation of instance size 
+works for all applications even monolithic
+
+vertical scaling:
+increasing more instances
+needs a load balancer to distribute load 
+needs application changes like session offloading for session maintainence
+can scale to anynumber 
+more granular control
+no disruption
+
+Instance Metadata:
+http://169.254.169.254/latest/meta-data/
+not authenticated or encrypted but you can control access using firewall rules
+
+bootstrap:
+
+http://169.254.169.254/latest/user-data
+
+you can apply this only at launch
+if execution of data fails you can connect to instance unless untill  you make something to fail 
+user data is limited 16KB 
+
+cfn-init:
+helper script installed on ec2 os 
+cfn-signal: this will send output of previously executed cfn-init and if its reports success then stack formation is marked as completed
+
+
+when you attach an instance role to an ec2 instance like granting access to s3 you are attaching something called as instance profile, when you create instance and attach instance role through UI this instance profile is create automatically but when you do this using cli or cloudformation you have to create and attach instance profile too.
+
+credentials are stored inside metadata, this will be renewed automatically and are always valid
+
+SSM Parameter store:
+offers 3 typers of parameters string, stringlists(list of string seperated by commas), 
+securestring(uses encryption, kms)
+supports licencecodes, dbpasswords, configs, passwords
+supports hirearichal and versioning
+supports plaintext and ciphertext for ciphertext you need to use KMS
+anychanges in parameters will create events
+
+logging on ec2:
+cloud watch agent is required for sending application or proccess logs to aws cloudwatch
+
+placement groups:
+cluster: performance focused, placed in same AZ, lowest latency, placed on same rack and may be on same host, 
+spread: multiple azs, 7 instances per AZ is the limit, cant be used with dedicated instances or dedicated hosts
+partitions: max partions for AZ is 7, each partition is in seperate hardware and rack, each partition can have more than 7 instances, great for toplogy aware application, hdfs, cassandra based systems, contain impact failure 
+
+Dedicated Hosts:
+cant mix with placement groups 
+cant support all AMIs like redhat suse linux, windows
+Amazon RDS instances are not supported
+hosts can be shared with other accounts in ORG, but other accounts can see only instances not hosts
+

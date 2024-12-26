@@ -1,0 +1,29 @@
+Hosted Zone: 
+A DB for a given DNS name eg: www.animals4life.com
+hosted zones will be created automatically when you register domain name using route 53, else you have to create separately
+name server hosts zone files
+www.catagram.io catagram.io is called as naked/apex record as its the root
+Cname vs Alias:
+cname points to another domain not to an IP
+for cname you cant point apex record to another domain name
+for alias you can point apex record to another aws resource
+you can have an  A record alias or cname record alias 
+
+Health checks:
+seprated from records but used by records
+tcp, http, https http/https string matching
+can be checked for anysystem you need to have access not limited to AWS
+
+
+routing policies:
+simple routing
+failover routing
+multi value routing: active active approach, improves availability, can do Health checks
+weighted routing: used to test new versions of application, can do Health checks
+latency based routing: optimise performance and better user experience, based on regions 
+geo based routing: used to restrict content based on geo location, dont return records based on geo location.
+geo proximity: uses bias, bias can be + or - based on this you can route traffic to geo locations 
+
+
+
+revisit: https://learn.cantrill.io/courses/1820301/lectures/41301592

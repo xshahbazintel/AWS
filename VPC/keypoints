@@ -1,0 +1,61 @@
+VPC:
+Aws vpc min range is /28 network providing 16 ip address and max of /16 network giving 6556 ips
+vpc is a region resilient service meaning its confined to a region
+
+Subnet:
+we are breaking above created 10.16.0.0/16 vpc into small parts called subnets 
+these subnets are spanned in a AZ, these are az resilient
+subnets will be always in one AZ,cant span in multiple AZs
+if total available ips in a subnet is 255 then you can assign only 250 to devices 
+5 are not available due to 1 for networkID one for internal routing between subnets 
+one for dns resolution one for future use and last ip for broadcast 
+
+Router:
+every vpc has a router associated
+the router has a network interface in every subnet, this interface ip is usually networkaddress+1
+route table is connected to subnet to route traffic, this route table associated with subnet
+defines what the vpc router has to do with traffic
+every subnet has one route table
+one route table can be associated to many subnets 
+
+
+IGW:
+Regional resilient
+one IGW can be attached to 1 vpc only
+a vpc cant have a IGW making vpc completely private
+when you create a public subnet, each machine in it gets a public IP, but the ip is not associated to that machine instead 
+IGW wil maintain a record of the machines private IP and associated public IP.
+you cant assign public IP to a resource/machine/ec2, meaning you cant assign to its os, igw will maintain a mapping
+
+
+stateless firewal:
+
+stateless firewall doesnt store information about state of connection 
+you have to explictly allow inbound and outbound rules 
+Stateless firewalls are fast, can handle large loads, and have historically been cheaper to purchase. However, they don't inspect traffic, require some configuration, and are somewhat outdated technology.
+Eg: NACLs
+
+NACLS:
+This will operate at subnet level
+only affects traffic leaving or entering into subnet 
+each subnet will only have one nacl 
+one nacl can be associated to many subnets
+
+statefull firewal:
+
+stateful firewall store information about state of connection 
+if inbound is allowed outbound is allowed
+you cant explicitly deny traffic for specfic ip address 
+these allow or block traffic at network interface of an instance 
+you can control logical resources meaning instances in subnet A can be configured to connect to instances in subnetB, this will allow you fine control of who can connect 
+you can connect instances with in a subnet too using SG 
+
+
+NAT GATEWAY:
+AZ resilient, you need to have one NAT gateway in each AZ
+need to run in public subnet and have a public IP 
+you will be charged for both nat gateway and data transfer cost
+cant be used as jump/bastion host
+nat gateway cant be associated with a SG only nacl are supported
+cannot work with ipv6
+you need route table for each AZ as nat gateway is AZ connected, you cant route trafic for NAT gateway in AZA from subnet in AZB

@@ -1,0 +1,22 @@
+Upgrading kubeadm clusters
+
+
+kubeadm from version 1.31.x to version 1.32.x, and from version 1.32.x to 1.32.y (where y > x). 
+Skipping MINOR versions when upgrading is unsupported
+kubeadm doesnt upgrade or install kubelets
+you have to do it separetely and restart kubelet once again
+
+
+1. upgrade kubeadm to version you want to upgrade this can be only one minor version at a time
+   kubeadm upgrade plan
+   kubeadm upgrade apply
+   
+2. kubeapi-server should be at highest version eg: 1.31 
+   kubecontroller manager and kubescheduler can be at 1.31 or 1.30
+   kubelet and kubeproxy can be at 1.31 or 1.30 or 1.29
+
+while upgrading nodes instead of drain straight 
+kubectl cordon node  #this will disable scheduling
+kubectl drain node
+upgrade kubeadm and kubelet 
+uncordon node
