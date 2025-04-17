@@ -1,0 +1,27 @@
+Load balancer distributes load between your ec2 instances or compute services in aws
+load balancer can be internet facing or private 
+internet facing load balancer can distribute load to non internet facing compute instances
+a min of 8+ free ips are needed for loadbalancer a min of /27 or /28 subnet
+crosszone load balancer can load balance between availability zones
+
+Application Load Balancer:
+operate on layer7 of OSI model, application layer
+terminates the connection at loadbalancer and creates a new connection to instance
+used for http and https based connections
+can perform path based routing, location based routing, session stickiness and cookies
+you can perform health checks 
+
+Network Load Balancer:
+operate on network layer of OSI model
+can be used for interupppted connections as connections are not terminated at loadbalancer
+can used for whitelising ips 
+very fast can handle million of connections
+can be used for other than http and https protocols based routing like ssh, smtp
+can be used for private link 
+
+
+ssl offload:
+bridge: terminates connection at load balancer check packet, creates a new connection and send it to ec2 or compute
+passthrough: simply forwards the connection to compute
+offload: terminates connection at load balancer and forwards payload to compute without ssl connection
+

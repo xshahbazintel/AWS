@@ -1,0 +1,17 @@
+Visibility timeout:
+when client consumes messages and if message is not deleted from queue,
+sqs will hide messages for a period of time called Visibility timeout and the same message, appears in queue after that timeout, ideal for error processing messages
+
+delay queues:
+messages will be added to queue but message will not appear in queue for a period of time , this is usually used where you need to prepare env for processing
+cant be used with fifo queues
+
+
+
+ASGS and lambdas can scale based on queue length
+
+queues can be
+standard: same message can be delivered multiple times, cant guarentee order of messages, highly scalable
+fifo: order of message is guarented, messages will be delivered in order, not scalable
+
+

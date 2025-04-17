@@ -1,0 +1,4 @@
+certs created by aws cm are renewed automatically, if you are using your own certs you have to manage renewal.
+ACM can be used only with some aws services like loadbalancer and cloudfront, you cant use acm with ec2
+when you configure loadbalancer with acm, the certificate needs to be present in the same region as in which loadbalancer is present, as acm is a regional service.
+cloudfronts certificate manager will be  operated from us-east-1 as cloudfront is global service.

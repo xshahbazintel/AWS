@@ -1,0 +1,5 @@
+1. create cgw with customer router value
+2. create vpg and attach that to the vpc where your customer has to send traffic
+3. create site2site vpn with above 2 values, under networking select static if you dont want to use
+   BGP
+4. download the configuration of site2site vpn 

@@ -1,0 +1,39 @@
+flow_logs:
+capture only metadata
+can be set at vpc level, subnet level, Network Interface level
+they are not realtime, delay in logs
+logs can be stored in S3 or cloudwatch 
+Egress-only IGW:
+In ipv4 we have public and private adresses, when an instance is present in private subnet
+to get software update you have to connect to internet, meaning connection is initiated from instance to public internet
+this should be allowed we usually do this using nat instance or nat gateway, but in ipv6 as there is no concept of private ip
+IPv6 by default are all publicly routable, to deny an connection initiated from 
+public internet you cant use regular IGW, you have to used EgressonlyIGW, this will help private instances to connect to internet but deny inbound connections from internet.
+
+VPC Endpoints:
+gateway Endpoints:
+S3 and DynamoDb are public aws services, you need a public to connect to them
+resources in a vpc have private ip by default, if you want to configure your resources inside vpc to connect to these services 
+without public routing or public ip address, you need Endpoints
+Endpoints are created per service per region
+Endpoint policy to restrict what it can access
+cant access crossregion resources
+uses prefix and route tables
+Interface Endpoints:
+can be used for every service in aws unlike gateway Endpoint for s3 and DynamoDb
+DynamoDb is supported using gateway Endpoint not with Interface Endpoint
+s3 can use both Interface and gateway Endpoint
+not HA as this is a AZ based service
+controlled access via Security groups 
+Endpoint policy can be applied for restricting control on what can be accessed
+TCP IPV4 support only
+uses private link
+
+VPC peering:
+can create vpc peering only between 2 vpcs
+vpcs can be in same/crossregion same/cross account
+not transitive
+
+
+
+

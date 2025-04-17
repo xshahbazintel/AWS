@@ -1,0 +1,92 @@
+origin: source location of your content, this can be s3 or any custom origin which is routable via public internet, you can have one or more origins
+distribution: configuration unit of cloudfront, 
+edge location: used for local caching of your data
+regional edge cache: larger than edge location, where less frequent accessed data is cached, another layer of caching 
+will support ACM and https
+cloudfront used only for downloading content not to upload
+
+
+Distributions:
+distributions have behaviours which are subset of distributions, there is a default behaviour * which matches for all patterns
+configurations at distributions level:
+which edge locations you want to deploy your cloudfront
+alternate domain names eg: cloudfront.devopsdoctor.online
+web application firewall WAF
+custom ssl certifacte
+security policy, like TLS versions 
+http versions
+
+configurations for behaviour:
+path pattern matching 
+origin and origin groups
+viewer policy between user and cloudfront like http, https
+ttl
+restrict viewer access, like trusted keygroup, trusted signer
+lambda edge functions
+caching behaviour
+
+
+objects in the source origin are cached and kept in edge location, this has a TTL period, if an object is in source is changed before this TTL, edge location wont know about updated image. you can control this using MAX and MIN TTL values, by default TTL is 24 hours. you can have TTL for a particular object too.
+
+Cache Invalidations:
+will be applied on distributions
+this will be applied on all edge locations 
+objects will expire before TTL if cache invalidation is applied and time is less than TTL
+used for path based like images/whiskers.jpg, images/whiskers*.jpg, images/*
+better use larger invalidations than smaller ones for eg: /* is better than /images/whiskers/image1.jpg
+
+you can use versioned file names instead of invalidation
+this versioned file names is not same as version in s3
+
+Cloudfront SSL TLS:
+you cant use selfsigned certs with cloudfront 
+when using s3 as orgin, the protocol between user and edgelocation  shouldmatch the protocol between edgelocation and origin
+ 
+
+
+
+when configuring cloudfront distribution, you can either give s3 bucket name or staticbuecket endpoint url provided by aws
+1. cfands3-top10cats-u4u8wip6nrl5.s3.us-east-1.amazonaws.com   #this is statics3 bucket name
+2. http://cfands3-top10cats-u4u8wip6nrl5.s3-website-us-east-1.amazonaws.com/ #this is s3 bucket url provided by aws
+
+if you pick option cloudfront will treat it as s3 endpoint origin
+if you pick option2 cloudfront will treat it as custom web origin 
+
+Viewer protocol policy: this controls how your protocol should be between users and cloudfront, https will allow only https connections, redirect http to https will redirect http to https, http and https will take any and server origin content
+
+
+how to protect origin?
+
+s3 origin
+OAI: orign access identity
+these are associated only  when you configure cloudfront to use s3 bucket
+when cloudfront only can provide/deliver content with out using s3 static endpoint url, you can use this, the idea is you want to deliver content only from one way i.e cloudfront not using s3 static bucket endpoint url.
+you can create a policy that can fetch content only from cloudfront verything else is blocked
+
+for custom origin:
+the event comes from user to cloudfront i.e edge location, you can add a custom  header there and  forward that request to origin, origin will validate custom header and delivers content to edgelocation.
+you can have a firewall, enable only to serve traffic only if its from cloudfronts ip addresses.
+you can use a combination of both methods for better origin protection.
+
+Private Origin:
+signed urls: 
+provides access to one object
+use where client doesnt support cookies
+
+signed cookies:
+provides access to group of objects
+provides access to group of files or objects
+if maintaining application url is important
+
+lambda@edge:
+supports nodejs and python
+a/b testing 
+migration between s3 origins
+content by country
+
+Global accelarator:
+when you create an global accelarator the accelarator is assigned an anycast ip address, 
+for eg: when you are trying to reach an app located in usa from australia, if global accelarator is enabled on it, you will be routed to nearest edge location initially, from there traffic is routed to 
+your application using aws network cables instead of public routing with less hops, making it faster
+this global accelarator doesnt cache data
+this works for non http, https protocols like tcp and udp

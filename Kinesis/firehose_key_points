@@ -1,0 +1,4 @@
+used for loading data to datalakes and datastores and anayalytics
+data is not realtime there will be delay of 60 sec compared to kinesis
+endpoints:
+http, splunk, elk, redshift, s3 buckets

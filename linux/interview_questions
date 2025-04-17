@@ -117,3 +117,16 @@ Add an entry to the /etc/fstab file to mount the logical volume at boot time.
  
 
 /dev/vg/volume1 /srv ext4 defaults 0 0 
+
+
+find all files that ends .html in a directory and subdirectory
+find /path/to/directory/ -type f -name "*.html"
+
+find all files that ends .html in a directory and subdirectory and replace any word 
+find /path/to/directory/ -type f -name "*.html"
+find /path/to/directory/ -type f -name "*.html" -exec sed -i 's/123/newword/g' {} +
+
+find all files in a directory and subdirectory thats not accessed in last 30 days
+find . -type f -atime +30
+
+

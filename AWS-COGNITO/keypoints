@@ -1,0 +1,4 @@
+cognito has to pools, user pools and identity pools
+user pools integrate with third party identities like google, facebook and so on and let them login to their identity, this identity provider will provide a jwt, using this jwt aws will confirm their identity. this wont allow access to any of aws resources like s3 or dynamodb
+
+identity pools will allow access to aws resources, this doesnt work on JWT, the token received by identity will come to api gateway and cognito, cognito will swap the token and provies a new aws token now this token can be used for accessing aws resources 

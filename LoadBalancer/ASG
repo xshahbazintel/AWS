@@ -1,0 +1,16 @@
+ASG are free
+
+scaling policies:
+manual scaling: you change the values manually
+scheduled scaling: where you scale the instances based on time, eg: sales
+dynamic scaling: based on cpu memory throughput
+
+
+lifecycle hooks
+
+asg health checks:
+checks the health of below things
+ec2 instances: this is default one, instance state is in terminated, shutdown, stopping, stopped or impaired then ec2 will mark instance as unhealthy
+loadbalancer: Checks whether the load balancer reports the instance as healthy, confirming whether the instance is available to handle requests.
+custom: where instance health is marked as healthy or unhealthy by an external or your custom checks
+

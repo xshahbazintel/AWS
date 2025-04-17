@@ -1,0 +1,16 @@
+business location > dx location > aws region
+
+business location: your office
+DX location: location to where you will you connect your cable, to a port this port will be allocated by AWS
+AWS region: dx location will connect with aws region
+
+dx location is not owned by AWS its a private DC where AWS has space allocated, in that you space when you request a direct connection a port is allocated for you
+
+if you also have some space in dx location you will connect aws dx router with your router in dx location else
+dx port of aws will be connected to communication partners dx port, and this  will extend port into your business locations
+
+
+you will have a physical connection cable connected to a port in dx location 
+dx location is connected to aws region
+you will be charged for port and outbound data charges
+provides high speed and low latency 

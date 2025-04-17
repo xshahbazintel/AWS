@@ -1,0 +1,37 @@
+Monitoring: alerts you when something goes wrong
+observability: provides you key data points like logs, metrics and traces to checks what caused the alert
+
+Prometheus:
+Prometheus is an open-source tool that monitors and alerts systems by collecting and storing metrics in a time-series database
+
+prometheus server collects metrics from various targets like kubernetees api server, or linux machines by scrapping http endpoints, and store data in time series database and provides http api end point to collect metrics for visualtions and alerting like grafana 
+
+exporters help to collect data and convert data to prometheus understandable format and expose them via http end point
+
+alert manager will generate alerts if any criteria is matched
+
+
+promethes server service is that service that enables ui
+
+
+scrape configs in config map has all the metrics that needs to be scraped, add a new job under it to monitor your application
+
+how to configure alerts:
+1. create alert in alert  prometheus-server configmap
+   under alerting_rules.yml create a roup like this 
+   groups:
+  - name: pod-alerts
+    rules:
+      - alert: PodInCrashLoopBackOff
+        expr: kube_pod_container_status_waiting_reason{reason="CrashLoopBackOff", namespace="default"} > 0
+        for: 5m
+        labels:
+          severity: critical
+          team: devops
+        annotations:
+          description: "Pod {{ $labels.pod }} is in a CrashLoopBackOff state."
+2. to send this alert you have to configure alert manager, for this edit configmap of alert-manager 
+under alertmanager.yaml, receivers create a new receiver with your slack or microsoft account
+after this add a route to match  lables created in alert of prometheus server, ref line 29
+
+   

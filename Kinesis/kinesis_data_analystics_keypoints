@@ -1,0 +1,8 @@
+realtime process of data
+usecases:
+realtime data sql processing
+time series anayalytics like elections data or sports data
+realtime dashborads like gaming leaderboards
+realtime metrics for security applications
+
+kinesis video streams used for realtime vide streaming and facial recognition with rekognition

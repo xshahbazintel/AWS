@@ -1,0 +1,9 @@
+kinesis is used for data ingestion, multiple data objects can write their data to kinesis
+
+kinesis vs sqs:
+sqs used for decoupling architechture
+producer and consumer need not to be aware of each other and asynchronus architechture
+message will be deleted once processed
+kinesis is used for data ingestion from large groups 
+there will be multiple sources writing data and multiple consumers reading data
+used for dashbords, Analytics, metrics

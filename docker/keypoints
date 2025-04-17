@@ -1,0 +1,55 @@
+docker is an opensource container platform that helps developers to package their application with all dependencies, this package is connverted to an image, using this image we can run application anywhere on container platform like docker and container orchestration tools like k8s
+
+containers vs vm
+
+container are light weight images that doesnt have complete os, it only have the packages and dependencies that are needed to run an application.
+vm has a complete os with all packages that are required to run an os it has memory and cpu set even used or ununsed
+
+There are different stages when we create a Docker container which is known as Docker Container Lifecycle. Some of the states are:
+
+Created: A container that has been created but not started
+Running: A container running with all its processes
+Paused: A container whose processes have been paused
+Stopped: A container whose processes have been stopped
+Deleted: A container in a dead state
+
+
+docker components:
+
+docker client: docker cli that runs commands
+docker host: docker daemon that executes comands passed by cli
+docker registry: saves docker images
+
+dockerd is running on another server how to connect or run images there:
+export DOCKER_HOST="tcp://...." use this env varibale or configure in /etc/docker/daemon.json
+{
+"hosts": ["tcp://127.0.0.1:5000", "unix:///var/run/docker.sock"]
+}
+
+
+cmd vs entrypoint:
+entry point is the default command that runs while starting a container 
+cmd is extra arguments that are passed to entrypoint, if nothing is passed it will take arguments mentioned in dockerfile
+
+networkingtypes:
+bridge: default, this will create a networkinterface called docker0, whenever a container runs a virtual ethernet is created this virtual ethernet will connect the container and docker0 network, this bridge network has a seperate network ip address range usually starts from 172.17.0.0/16.
+when you run a container docker creates virtual etherfaces and connects to docker0 network, on other side docker container creates one etherface and connects to virtual etherface
+overlay
+hostnetwork: there is no seperation of docker container from host network, it just runs as an application, no need to expose ports seperately
+macvlan
+
+
+how to seperate containers networking
+create user defined networking in bridge network and start containers in that network
+
+multistage build:
+allow you to build docker image in multiple stages allow you to copy artifacts from one stage to another there by reduces docker size
+
+distroless image?
+minimal light weight docker image which doesnt have packages that are not required that are vulnerbale to threats
+
+In general, --mount is preferred. The main difference is that the --mount flag is more explicit and supports all the available options.
+
+If you use --volume to bind-mount a file or directory that does not yet exist on the Docker host, Docker automatically creates the directory on the host for you. It's always created as a directory.
+
+--mount does not automatically create a directory if the specified mount path does not exist on the host. Instead, it produces an error

@@ -59,3 +59,6 @@ cant be used as jump/bastion host
 nat gateway cant be associated with a SG only nacl are supported
 cannot work with ipv6
 you need route table for each AZ as nat gateway is AZ connected, you cant route trafic for NAT gateway in AZA from subnet in AZB
+
+
+disable source destination check: when you ping or send traffic from one instance to another, the instance will check if the ping is meant for it, while you are using a server as nat server you have to disable source destination check because the traffic is to be forwarded to another server.

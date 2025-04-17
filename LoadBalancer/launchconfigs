@@ -1,0 +1,9 @@
+launch configurations are used to define how your instance should be configured 
+this LC are not editable and not versionable, you have to edit this and create new LC
+these are used by autoscaling groups to launch instances
+you cant launch individual instance using LC
+
+launch templates also provides same configs are launch configurations
+you can create versions with this 
+this are used by autoscaling groups to launch instances
+you can launch instances using LT

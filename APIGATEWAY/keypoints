@@ -1,0 +1,24 @@
+authentication:
+can be open meaning no authentication is required
+can be done using aws cognito
+can be done using lambda authoriser
+
+endpoints:
+edge-optimised: routed to nearest cloudfront location
+regional: routed to nearest region
+private: used as endpoint from inside vpc
+
+error codes:
+4xx client side errors
+5xx server side errors
+400 bad request
+403 unauthorized
+429 throttle limit error
+502 bad gateway
+503 service unavailable
+504 integration failure
+
+caching a gateway is possible and encryption is also possible 
+cache default is 300 seconds
+
+

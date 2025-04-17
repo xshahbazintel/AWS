@@ -1,0 +1,16 @@
+Publishers communicate asynchronously with subscribers by sending messages to a topic, 
+which is a logical access point and communication channel.
+
+Clients can subscribe to the Amazon SNS topic and receive published messages using a 
+supported endpoint type, such as Amazon Data Firehose, Amazon SQS, AWS Lambda, 
+HTTP, email, mobile push notifications, and mobile text messages (SMS).
+
+fanout is a thing where 2 sqs queues are subscribed to same sns topic
+
+
+SNS Capabilites:
+give message delivery status 
+capable of retiries
+cross account capability using topic permissions
+ha and scalabale
+capable of sse encryption

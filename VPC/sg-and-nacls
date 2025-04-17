@@ -1,0 +1,21 @@
+NACLS:
+This will operate at subnet level
+only affects traffic leaving or entering into subnet 
+each subnet will only have one nacl 
+one nacl can be associated to many subnets
+you can deny or allow specific traffic from an IP address
+you may have multiple rules, rules are evaluted in number order, low number has high priority
+this is stateless, meaning doesnt know state of connection if its inbound or outbound
+
+SG:
+stateful firewall store information about state of connection 
+if inbound is allowed outbound is allowed
+you cant explicitly deny traffic for specfic ip address 
+these allow or block traffic at network interface of an instance 
+you can control logical resources meaning instances in subnet A can be configured to connect to instances in subnetB, this will allow you fine control of who can connect 
+you can connect instances with in a subnet too using SG
+
+
+Let us assume you have inbound rule to allow SSH access from 0.0.0.0/0
+and no outbound rule, can you ssh to another system as SG are stateful
+No you cant ssh, you have to have outbound ssh rule too 

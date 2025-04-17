@@ -1,0 +1,52 @@
+1 create a vpc with two instances one in public and one in pribate subnets
+  private instances need to communicate with s3 using gateway endpoints
+  In this task we have to select vpc in which we want to place endpoints and
+  route table that this gateway endpoint should use, if you want a instance in a subnet to use this endpoint
+  make sure you select the same route table that the instance is associated to, if you want all instances should use this select all routetables
+
+2. create interface endpoints
+   create 1 instance in public and 1 in private subnet
+   private subnets need to communicate with sqs using gateway endpoints
+   in this we have to select subnets where this interface endpoint is to be deployed
+   this will deploy an ENI into that subnet
+   create or select SG for this ENI
+   this SG should allow http inbound traffic as ENI will receive traffic from instances
+   
+3. create vpc provider and vpc consumer, connect to services in vpc provider from vpc consumer using private link
+   create provider vpc range 10.200.0.0/16
+   create 2 subnets 1 for launching webserver 1 for nlb
+   create securitygroup for webserver, this should accept inbound traffic from vpc range i.e 10.200.0.0/16
+   create a target group for target type as instance and this should listen tcp traffic on port 80
+   tcp port because we are going to create nlb, which works with tcp and udp, and add vpcb webserver to this target group
+   create nlb, place it in nlb subnet, sg rules pending
+   com.amazonaws.vpce.us-east-1.vpce-svc-0eb77dbdb552a5891
+   create a vpc-endpoint-service point that to nlb, copy the service name
+
+   create a service consumer vpc, vpc cidr range 10.100.0.0/16
+   create 2 subnets 1 public 1 private
+   launch server from public subnet, 
+   this SG should have inbound rule ssh from 0.0.0.0/0
+   outbound rule allow ssh to sg of private subnet or 10.100.0.0/16
+   launch server from private subnet, 
+   this SG should have inbound ssh rule from vpc range
+   outbound tcp 80
+   vpc endpoint sg rules
+   inbound tcp from private server sg or vpc range
+   outbound tcp 80 to vpc range
+   create vpcendpoint service type PrivateLink Ready partner services, service name should be endpointservice create in consumer vpc com.amazonaws.vpce.us-east-1.vpce-svc-0eb77dbdb552a5891
+   vpc is consumer vpc, select subnet where you want to create this endpoint
+
+   vpc b sg
+
+   nlb inbound sg tcp 80 from vpc a range
+   outbound to tcp 80 to webserver sg or vpc b range
+
+   webserver sg rule
+   inbound tcp 80
+   outbound deny all
+   
+
+  
+
+   
+

@@ -4,6 +4,21 @@
    in this config.toml change SystemdCgroup = true
 4. sudo systemctl restart containerd
 
+sudo vi /etc/sysctl.conf
+
+net.ipv4.ip_forward = 1
+
+sudo sysctl -p
+
+
+
+sudo vi /etc/modules-load.d/br_netfilter.conf
+
+add this 
+
+br_netfilter
+
+
 sudo apt-get update
 # apt-transport-https may be a dummy package; if so, you can skip that package
 sudo apt-get install -y apt-transport-https ca-certificates curl gpg
@@ -25,6 +40,7 @@ Both the container runtime and the kubelet have a property called "cgroup driver
 
 sudo kubeadm init --apiserver-advertise-address <ip address> --pod-network-cidr <pod network-cidr> --upload-certs
 
+kubeadm init --apiserver-advertise-address 10.16.57.250 --pod-network-cidr "10.244.0.0/16" --upload-certs
 
 run all the process on all worker and master nodes except kubeadm init
 kubeadm init is to be run only on master nodes

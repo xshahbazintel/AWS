@@ -1,0 +1,10 @@
+logical connection between aws private environment and on-prem or another cloud infra using public internet
+can be HA if you design it properly
+can be setup with in onehour unlike direct connect
+VGW: logical gateway you create and associate with a single vpc, this is on aws, from where your datacenter traffic connects
+CGW: logical config on aws or physical device that this config refers, this refers to the customer side 
+router, or firewall.
+let us assume that you are connecting to a datacenter of your organisation
+cgw refers to the routr in your datacenter
+the vgw is a gateway that is created and attached to the vpc that your onprem network wants to connect
+this vgw is the point where your onprem traffic enter

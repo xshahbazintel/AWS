@@ -1,0 +1,39 @@
+lammbda is a function as a service, provides runtime enviroment to run code
+you cant allocate cpu but you can allocate memory, memory will allocate cpu
+memory can be min as 128MB and max of 10240 MB
+storage is temporary min of 512MB and max of 10240MB
+lambda function can run a max of 900sec or 15 minutes
+
+Networking:
+lambda can run in aws public space this can connect to public internet with out need of any network requirements like sg or nacls.
+this can also connect to dynamodb and s3 unless until any deny is there on resource
+
+lambda can run also in vpc, if it is running in vpc you need network requirements to connect to public requirement like sgs and nacls, also aws public services like dynamodb and s3 
+
+
+policy:
+lambda has execution role which is used to gain credentials while interacting with ither aws services
+
+lambda has resource policy who can invoke a lambda function, this can external accounts or another aws resources like sns or dynamodb, changes to this can be done using api or cli not using ui
+
+
+there are three types of invocations
+
+asynchronus
+synchronus
+Event Source Mapping with Polling: These services don’t invoke Lambda function directly. Lambda will poll from the AWS SQS or Kinesis streams, retrieve records, and invoke functions. this type lambda need access to SQS or kinesis streams to read event
+
+
+versions:
+lambda function has versions, each version has seperate code changes or resource requirement changes, you cant edit this once added, you have to create new version
+aliases like dev test prod, you can create this and point to specific versions
+
+stepfunctions:
+
+
+usecases:
+serverless applications
+serverless cron
+file processing
+database triggers
+real time data processing

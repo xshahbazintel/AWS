@@ -1,0 +1,42 @@
+Bucket: a place to store your files, imagine like a folder
+bucket name should be unique across aws accounts
+max no of buckets per account is 100
+objects: files that are stored inside bucket, can be of anytype pdf, doc, mp3..
+max object size can be 5TB
+you can store infinite objects
+
+s3 ui how do you manage different things?
+objects: used to upload, delete and manage objects
+properties: place to control versioning, encryption, loging, event notifications such as send an event to another service when upload/delete event occurs in bucket, transfer acceleration, send events to eventbridge, lock, static website hosting
+permissions: used to controll access of your objects
+metrics: all the cloudwatch metrics, such as bucket size, total no of objects.
+management: place to configure things like replication rules, lifecycle rules, 
+access points
+
+Storage Classes:
+Standard: 
+Default storage, no charge to upload, egress charged, no retrival fee, charged per GB of data, no minimum object size, no minimum duration
+Standard IA: 
+egress charge + data retrival fee
+minimum storage duration is 30 days, if you store an object for 5 days and delete it, you will still be charged for 30 days
+min object size is 128 Kb, even your object size is 1 Kb you will be charged for 128 Kb
+onezone-Infrequent Access:
+sames as standard Infrequent access, but data is stored in only one AZ
+
+Glacier Instant:
+min charged for 90 days
+min object size is 128 Kb
+ideal for archived data which needs to be accessed immediately
+
+Glacier Flexible:
+data cant be retrived immediately, has retrival fee, min duration 90 days
+min object size  40 Kb
+
+glacier Deep Archive:
+cant be retrived immediately
+min duration is 180 days 
+min object size is 40 Kb
+
+Intelligent tiering:
+automatically moves data between various storage classes
+automation cost per 1000 objects

@@ -1,0 +1,7 @@
+storage gateway provides a solution for your onpremises applications to access/store data in cloud.
+you are small enterprise and you want to store data for migrations or backups or DR into cloud, you can use storage gateway as a solution.
+
+storage gateway provides multiple solutions
+
+volume mode:
+volume mode offers two solutions,  stored mode and cached mode
